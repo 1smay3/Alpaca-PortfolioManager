@@ -1,7 +1,9 @@
 from app.repository.alpaca.alpaca_service import AlpacaService
+from app.repository.fmp.fmp_service import FMPService
 from app.repository.alpaca.models.MarketStatus import MarketStatus
 
 alpaca = AlpacaService()
+fmp = FMPService()
 
 
 def print_nasdaq_assets(active_assets):
@@ -20,8 +22,15 @@ def print_current_market_status():
     clock_observable.subscribe(lambda clock: map_market_status(clock))
 
 
+def quote(ticker):
+    quote_observable = fmp.get_quote(ticker)
+    return quote_observable.subscribe(lambda ticker: get_quote(ticker))
+
+
 def main():
     print_current_market_status()
+
+    print(quote('AAL'))
 
 
 main()
