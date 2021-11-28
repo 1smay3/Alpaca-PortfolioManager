@@ -1,7 +1,7 @@
 from app.repository.alpaca.alpaca_service import AlpacaService
 from app.repository.fmp.fmp_service import FMPService
 from app.repository.alpaca.models.MarketStatus import MarketStatus
-from app.repository.alpaca.models.AccountHandler import init_account_status
+from app.repository.alpaca.models.AccountHandler import AccountHandler
 alpaca = AlpacaService()
 fmp = FMPService()
 
@@ -24,7 +24,9 @@ def print_current_market_status():
 
 def main():
     # Check account active
-    init_account_status()
+    acc = AccountHandler()
+    acc.pull_account()
+    print(acc.personalAccount.balance)
 
 
 main()
