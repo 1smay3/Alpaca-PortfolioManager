@@ -8,10 +8,6 @@ from app.config.config import alpaca_key, alpaca_secret
 api = tradeapi.REST(alpaca_key, alpaca_secret, api_version='v2')
 
 
-def get_account() -> Observable:
-    return rx.of(api.get_account())
-
-
 class IAlpacaService(Protocol):
 
     @abstractmethod
@@ -22,8 +18,13 @@ class IAlpacaService(Protocol):
     def get_active_assets(self) -> Observable:
         pass
 
+    @abstractmethod
+    def get_orders(self) -> Observable:
+        pass
 
-
+    @abstractmethod
+    def get_account(self) -> Observable:
+        pass
 
 
 class AlpacaService(IAlpacaService):
@@ -33,3 +34,9 @@ class AlpacaService(IAlpacaService):
 
     def get_active_assets(self) -> Observable:
         return rx.of(api.list_assets(status='active'))
+
+    def get_orders(self) -> Observable:
+        return rx.of(api.list_orders())
+
+    def get_account(self) -> Observable:
+        return rx.of(api.get_account())
