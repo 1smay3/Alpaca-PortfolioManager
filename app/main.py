@@ -1,32 +1,52 @@
-from app.repository.alpaca.alpaca_service import AlpacaService
-from app.repository.fmp.fmp_service import FMPService
-from app.repository.alpaca.models.MarketStatus import MarketStatus
+from app.repository.alpaca.models.OrderHandler import Trader
 from app.repository.alpaca.models.AccountHandler import AccountHandler
-alpaca = AlpacaService()
-fmp = FMPService()
+import logging
+import datetime
 
 
-def print_nasdaq_assets(active_assets):
-    nasdaq_assets = [a for a in active_assets if a.exchange == 'NASDAQ']
-    print(nasdaq_assets)
+
+# TODO:somewhere else
+dt_format = '%d/%m/%Y %H:%M:%S'
+logging.basicConfig(filename='../app/logs/main.log',
+                    filemode='a',
+                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
+                    datefmt=dt_format,
+                    level=logging.INFO)
+
+# Get date and time
+current_dt = datetime.datetime.now().strftime(dt_format)
+
+# Initiate Classes
+pm = Trader()
+account_handler = AccountHandler()
+
+# Get Account
+account_handler.pull_account()
+pa = account_handler.personalAccount
+
+# Check Account Status
+if pa.is_online:
+    logging.info("Account Online : " + current_dt)
+    pass
+else:
+    raise ValueError("Account is not online")
 
 
-def map_market_status(clock):
-    # TODO: Why does this not know what the properties are despite the type hint?
-    mapped = MarketStatus(clock.timestamp, clock.is_open, clock.next_open, clock.next_close)
-    print(mapped)
+#
+# # Get balance
+# curr_balance = account_handler.personalAccount.cash
+#
+# # Get Current Positions
+#
+#
+#
+#
+#
+# pm.get_orders()
+# pm.get_positions()
+# orders = pm.orders
+# positions = pm.positions
+#
+#
 
 
-def print_current_market_status():
-    clock_observable = alpaca.get_clock()
-    clock_observable.subscribe(lambda clock: map_market_status(clock))
-
-
-def main():
-    # Check account active
-    acc = AccountHandler()
-    acc.pull_account()
-    print(acc.personalAccount.balance)
-
-
-main()
