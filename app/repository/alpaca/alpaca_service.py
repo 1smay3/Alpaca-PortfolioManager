@@ -3,13 +3,9 @@ import rx
 from typing import Protocol
 from rx import Observable
 from abc import abstractmethod
-from app.config.config import alpaca_key, alpaca_secret
+from app.config.config import paper_url, paper_key, paper_secret
 
-api = tradeapi.REST(alpaca_key, alpaca_secret, api_version='v2')
-
-
-def get_account() -> Observable:
-    return rx.of(api.get_account())
+api = tradeapi.REST(base_url = paper_url, key_id=paper_key, secret_key=paper_secret, api_version='v2')
 
 
 class IAlpacaService(Protocol):
@@ -22,14 +18,32 @@ class IAlpacaService(Protocol):
     def get_active_assets(self) -> Observable:
         pass
 
+    @abstractmethod
+    def get_orders(self) -> Observable:
+        pass
 
+    @abstractmethod
+    def get_account(self) -> Observable:
+        pass
 
+    @abstractmethod
+    def get_positions(self) -> Observable:
+        pass
 
 
 class AlpacaService(IAlpacaService):
+
+    def get_account(self) -> Observable:
+        return rx.of(api.get_account())
 
     def get_clock(self) -> Observable:
         return rx.of(api.get_clock())
 
     def get_active_assets(self) -> Observable:
         return rx.of(api.list_assets(status='active'))
+
+    def get_orders(self) -> Observable:
+        return rx.of(api.list_orders())
+
+    def get_positions(self) -> Observable:
+        return rx.of(api.list_positions())

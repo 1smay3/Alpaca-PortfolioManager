@@ -1,24 +1,52 @@
-from app.repository.alpaca.alpaca_service import AlpacaService, get_account
-from app.repository.alpaca.models.MarketStatus import print_current_market_status
-
-alpaca = AlpacaService()
-
-
-def print_nasdaq_assets(active_assets):
-    nasdaq_assets = [a for a in active_assets if a.exchange == 'NASDAQ']
-    print(nasdaq_assets)
+from app.repository.alpaca.models.OrderHandler import Trader
+from app.repository.alpaca.models.AccountHandler import AccountHandler
+import logging
+import datetime
 
 
-def print_account_status():
-    account_observable = get_account()
-    account_observable.subscribe()
+
+# TODO:somewhere else
+dt_format = '%d/%m/%Y %H:%M:%S'
+logging.basicConfig(filename='../app/logs/main.log',
+                    filemode='a',
+                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
+                    datefmt=dt_format,
+                    level=logging.INFO)
+
+# Get date and time
+current_dt = datetime.datetime.now().strftime(dt_format)
+
+# Initiate Classes
+pm = Trader()
+account_handler = AccountHandler()
+
+# Get Account
+account_handler.pull_account()
+pa = account_handler.personalAccount
+
+# Check Account Status
+if pa.is_online:
+    logging.info("Account Online : " + current_dt)
+    pass
+else:
+    raise ValueError("Account is not online")
 
 
-def main():
-    print_current_market_status()
-    print_account_status()
-    #active_assets_observable = alpaca.get_active_assets()
-    # active_assets_observable.subscribe(lambda active_assets: print_nasdaq_assets(active_assets))
+#
+# # Get balance
+# curr_balance = account_handler.personalAccount.cash
+#
+# # Get Current Positions
+#
+#
+#
+#
+#
+# pm.get_orders()
+# pm.get_positions()
+# orders = pm.orders
+# positions = pm.positions
+#
+#
 
 
-main()
