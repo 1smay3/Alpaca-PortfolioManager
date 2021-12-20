@@ -153,3 +153,4 @@ cython_debug/
 
 # Alpaca-momentum
 app/config/secrets.py
+app/test.py
