@@ -5,7 +5,7 @@ from app.config.config import portfolio_hardcode
 import logging
 import datetime
 
-x = Instruction(symbol="turd", side = "test", weight="poo", type="market")
+
 
 # TODO:somewhere else
 dt_format = '%d/%m/%Y %H:%M:%S'
