@@ -1,5 +1,6 @@
 from app.repository.alpaca.models.OrderHandler import Trader
 from app.repository.alpaca.models.AccountHandler import AccountHandler
+from app.config.config import portfolio_hardcode
 import logging
 import datetime
 
@@ -32,21 +33,16 @@ else:
     raise ValueError("Account is not online")
 
 
-#
-# # Get balance
-# curr_balance = account_handler.personalAccount.cash
-#
-# # Get Current Positions
-#
-#
-#
-#
-#
-# pm.get_orders()
-# pm.get_positions()
-# orders = pm.orders
-# positions = pm.positions
-#
-#
+# Get current balance, positions, and orders to build portfolio
+pm.get_orders()
+pm.get_positions()
+
+orders = pm.orders
+positions = pm.positions
+
+# Import optimal portfolio, and check against existing positions
+op_port = portfolio_hardcode
+
+print("END")
 
 

@@ -4,8 +4,9 @@ from typing import Protocol
 from rx import Observable
 from abc import abstractmethod
 from app.config.config import paper_url, paper_key, paper_secret
+from app.repository.alpaca.models import Instruction
 
-api = tradeapi.REST(base_url = paper_url, key_id=paper_key, secret_key=paper_secret, api_version='v2')
+api = tradeapi.REST(base_url=paper_url, key_id=paper_key, secret_key=paper_secret, api_version='v2')
 
 
 class IAlpacaService(Protocol):
@@ -30,6 +31,10 @@ class IAlpacaService(Protocol):
     def get_positions(self) -> Observable:
         pass
 
+    @abstractmethod
+    def submit_order(self, instruction: Instruction) -> Observable:
+        pass
+
 
 class AlpacaService(IAlpacaService):
 
@@ -47,3 +52,9 @@ class AlpacaService(IAlpacaService):
 
     def get_positions(self) -> Observable:
         return rx.of(api.list_positions())
+
+    def submit_order(self, instruction: Instruction) -> Observable:
+        return rx.of(api.submit_order(instruction.symbol,
+                                      side=instruction.side,
+                                      notional=instruction.notional,
+                                      type=instruction.type))
