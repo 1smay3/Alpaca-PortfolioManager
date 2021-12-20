@@ -5,6 +5,11 @@ import logging
 from app.config.metadata import dt_format, current_dt
 
 # TODO: Extract this to a logging layer as this is not easily used between machines.
+logging.basicConfig(filename='../app/logs/main.log',
+                    filemode='a',
+                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
+                    datefmt=dt_format,
+                    level=logging.INFO)
 
 # Initiate Classes
 pm = Trader()
