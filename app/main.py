@@ -4,11 +4,7 @@ from app.config.config import portfolio_hardcode
 import logging
 from app.config.metadata import dt_format, current_dt
 
-logging.basicConfig(filename='../app/logs/main.log',
-                    filemode='a',
-                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
-                    datefmt=dt_format,
-                    level=logging.INFO)
+# TODO: Extract this to a logging layer as this is not easily used between machines.
 
 # Initiate Classes
 pm = Trader()
