@@ -1,13 +1,19 @@
 import alpaca_trade_api as tradeapi
 import rx
 from typing import Protocol
+
+from alpaca_trade_api.common import URL
 from rx import Observable
 from abc import abstractmethod
-from app.config.config import paper_url, paper_key, paper_secret
+from app.config.secrets import paper_key_id, paper_key_secret
 from app.repository.alpaca.models.Instructions import Instruction
 
-api = tradeapi.REST(base_url=paper_url, key_id=paper_key, secret_key=paper_secret, api_version='v2')
-
+api = tradeapi.REST(
+    base_url=URL("https://paper-api.alpaca.markets"),
+    key_id=paper_key_id,
+    secret_key=paper_key_secret,
+    api_version='v2'
+)
 
 class IAlpacaService(Protocol):
 
