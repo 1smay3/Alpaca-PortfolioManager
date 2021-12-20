@@ -1,6 +1,4 @@
-- Gather tradable assets from Alpaca brokerage
-- Grab data for tradeable assets from FMP API
-- Run basic signal processing on data
+- Run mean_variance optimisation on factor ETFs
 - Place positions on alpaca
 - Track positioning and performance
 - Automate to run daily and error handling for holidays, weekends, etc.git init
