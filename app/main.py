@@ -1,10 +1,11 @@
 from app.repository.alpaca.models.OrderHandler import Trader
+from app.repository.alpaca.models.Instructions import Instruction
 from app.repository.alpaca.models.AccountHandler import AccountHandler
 from app.config.config import portfolio_hardcode
 import logging
 import datetime
 
-
+x = Instruction(symbol="turd", side = "test", weight="poo", type="market")
 
 # TODO:somewhere else
 dt_format = '%d/%m/%Y %H:%M:%S'
@@ -32,7 +33,6 @@ if pa.is_online:
 else:
     raise ValueError("Account is not online")
 
-
 # Get current balance, positions, and orders to build portfolio
 pm.get_orders()
 pm.get_positions()
@@ -44,5 +44,3 @@ positions = pm.positions
 op_port = portfolio_hardcode
 
 print("END")
-
-

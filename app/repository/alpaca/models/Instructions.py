@@ -4,6 +4,7 @@ from dataclasses import dataclass
 class Instruction:
     symbol: str
     side: str  # Enum
-    notional: float
+    weight: float
     type: str = "market"
+
 

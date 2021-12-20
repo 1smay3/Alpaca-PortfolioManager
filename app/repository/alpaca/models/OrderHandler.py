@@ -1,11 +1,8 @@
-
-
 from app.repository.alpaca.alpaca_service import AlpacaService
 from alpaca_trade_api.rest import Positions, Orders
-from app.repository.alpaca.models.AccountHandler import localAccount
+from app.repository.alpaca.models.Instructions import Instruction
 
 alpaca = AlpacaService()
-
 
 
 class Trader():
@@ -27,6 +24,6 @@ class Trader():
         orders_obs.subscribe(lambda response: self.set_orders(response))
 
     def buy_order(self, instruction: Instruction):
-        # Weight checks
-        buy_obs = alpaca.submit_order(instruction.symbol, instruction.notional)
-        buy_obs.subscribe(lambda response: self.set_orders(response))
+        # Weight checks in validator
+        buy_obs = alpaca.submit_order(instruction)
+        # buy_obs.subscribe(lambda response: self.set_orders(response))

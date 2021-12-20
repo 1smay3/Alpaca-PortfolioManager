@@ -6,7 +6,6 @@ from dataclasses import dataclass
 alpaca = AlpacaService()
 
 
-
 class AccountHandler:
     personalAccount = None
 
@@ -17,6 +16,9 @@ class AccountHandler:
     def create_account(self, remoteAccount):
         self.personalAccount = localAccount(remoteAccount)
 
+
+# TODO
+# Remove later
 
 @dataclass
 class localAccount:
@@ -30,4 +32,3 @@ class localAccount:
         self.is_online = (remoteAccount.status == "ACTIVE")
         self.balance = remoteAccount.equity
         self.cash = remoteAccount.cash
-

@@ -4,7 +4,7 @@ from typing import Protocol
 from rx import Observable
 from abc import abstractmethod
 from app.config.config import paper_url, paper_key, paper_secret
-from app.repository.alpaca.models import Instruction
+from app.repository.alpaca.models.Instructions import Instruction
 
 api = tradeapi.REST(base_url=paper_url, key_id=paper_key, secret_key=paper_secret, api_version='v2')
 
@@ -56,5 +56,5 @@ class AlpacaService(IAlpacaService):
     def submit_order(self, instruction: Instruction) -> Observable:
         return rx.of(api.submit_order(instruction.symbol,
                                       side=instruction.side,
-                                      notional=instruction.notional,
+                                      notional=instruction.weight,
                                       type=instruction.type))
