@@ -5,9 +5,7 @@ from app.config.config import portfolio_hardcode
 import logging
 import datetime
 
-x = Instruction(symbol="turd", side = "test", weight="poo", type="market")
-
-# TODO:somewhere else
+# TODO: Extract this to a logging layer as this is not easily used between machines.
 dt_format = '%d/%m/%Y %H:%M:%S'
 logging.basicConfig(filename='../app/logs/main.log',
                     filemode='a',
