@@ -15,6 +15,7 @@ api = tradeapi.REST(
     api_version='v2'
 )
 
+
 class IAlpacaService(Protocol):
 
     @abstractmethod
