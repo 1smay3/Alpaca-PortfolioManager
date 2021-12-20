@@ -1,5 +1,5 @@
 from fmp_python.fmp import FMP
-from app.config.config import fmp_key
+from app.config.secrets import fmp_key
 import rx
 from typing import Protocol
 from rx import Observable

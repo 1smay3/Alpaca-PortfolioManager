@@ -10,10 +10,6 @@ def minimum_checker(value: float) -> bool:
     return value > 0
 
 
-def get_weight(instruction: Instruction):
-    return instruction.weight
-
-
 def handle_inval_weights(is_valid_min: bool, is_valid_max: bool, symbol: str, weight: float):
     if not is_valid_min:
         raise ValueError(symbol + " weight must be positive, is currently: " + str("{:.2%}".format(weight)))
@@ -41,7 +37,7 @@ def buy_order_check(instruction: list[Instruction], portfolio_value):
         implied_notional = ins.weight * portfolio_value
 
     # Check instructions together
-    weights_list = list(map(get_weight, instruction))
+    weights_list = list(map(lambda inst: inst.weight, instruction))
     weights_sum = sum(weights_list)
     weights_bool = maximum_checker(weights_sum)
 
