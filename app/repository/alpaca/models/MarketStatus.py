@@ -26,5 +26,3 @@ class MarketStatus:
                 self.next_open)
 
         return pretty_timestamp + ".\n" + formatted_next + "."
-
-

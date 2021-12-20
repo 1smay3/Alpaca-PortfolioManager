@@ -1,22 +1,14 @@
 from app.repository.alpaca.models.OrderHandler import Trader
-from app.repository.alpaca.models.Instructions import Instruction
 from app.repository.alpaca.models.AccountHandler import AccountHandler
 from app.config.config import portfolio_hardcode
 import logging
-import datetime
+from app.config.metadata import dt_format, current_dt
 
-
-
-# TODO:somewhere else
-dt_format = '%d/%m/%Y %H:%M:%S'
 logging.basicConfig(filename='../app/logs/main.log',
                     filemode='a',
                     format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
                     datefmt=dt_format,
                     level=logging.INFO)
-
-# Get date and time
-current_dt = datetime.datetime.now().strftime(dt_format)
 
 # Initiate Classes
 pm = Trader()
@@ -31,6 +23,7 @@ if pa.is_online:
     logging.info("Account Online : " + current_dt)
     pass
 else:
+    logging.info("Failed to retrieve account information : " + current_dt)
     raise ValueError("Account is not online")
 
 # Get current balance, positions, and orders to build portfolio
@@ -42,5 +35,3 @@ positions = pm.positions
 
 # Import optimal portfolio, and check against existing positions
 op_port = portfolio_hardcode
-
-print("END")

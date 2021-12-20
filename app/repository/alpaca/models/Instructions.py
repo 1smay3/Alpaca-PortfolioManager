@@ -7,5 +7,3 @@ class Instruction:
     side: str  # Enum
     weight: float
     type: str = "market"
-
-

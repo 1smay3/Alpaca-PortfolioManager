@@ -10,7 +10,7 @@ def minimum_checker(value: float) -> bool:
     return value > 0
 
 
-def handle_inval_weights(is_valid_min: bool, is_valid_max: bool, symbol:str, weight: float):
+def handle_inval_weights(is_valid_min: bool, is_valid_max: bool, symbol: str, weight: float):
     if not is_valid_min:
         raise ValueError(symbol + " weight must be positive, is currently: " + str("{:.2%}".format(weight)))
     if not is_valid_max:
@@ -18,7 +18,7 @@ def handle_inval_weights(is_valid_min: bool, is_valid_max: bool, symbol:str, wei
 
 
 def _is_buy_valid(instruction: Instruction) -> bool:
-    desired_weight = instruction.weight
+    desired_weight = instruction.weightá
     symbol = instruction.symbol
     # Check desired weight isn't mumbo jumbo
     is_valid_min = minimum_checker(desired_weight)
