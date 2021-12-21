@@ -1,15 +1,17 @@
 from app.repository.alpaca.models.Instructions import Instruction
 from app.repository.alpaca.models.OrderHandler import Trader
 from app.repository.alpaca.models.AccountHandler import AccountHandler
-from app.test import test_trade1, test_trade2, trades_test, portfolio_hardcode
+from app.test import portfolio_hardcode
 
+import logging
 import pandas as pd
 
 """
 WIP - DRAFT - implementation / logic / what we want to achieve inplace, but structure, approach, etc. needs rework
 """
-# TODO typehints, cleanup
+# TODO typehints, cleanup, add logging to trade acceptance and rejects
 # Draw very clean lines between weight and notional
+
 
 pm = Trader()
 account_handler = AccountHandler()
@@ -166,17 +168,21 @@ def _trade_instructions(approved_instructions, order_fill_assumption: bool):
 
 def _place_trades(approved_instructions):
     for ins in approved_instructions:
-        print(ins.weight)
-        user_check = input("User Approval: Y/N")
+        trade_info = (ins.symbol, ins.weight)
+        print(trade_info)
+        user_check = input("User Approval (Y/n): \n")
         if user_check == "Y":
             pm.buy_order(ins)
+            # Placed should only be mentioned when got a response from API with confirmation its placed
+            #logging.info("Trade Approval and Placed: " + trade_info[0] + ", " + trade_info[1])
         elif user_check == "N":
-            print("User Rejected")
+            pass
+            #logging.info("Trade Rejected: " + trade_info[0] + ", " + trade_info[1])
 
 
-# print(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode)))
+# print(_trade_instructioNns(_approved_compiled_instructions(portfolio_hardcode)))
 
-print(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode), False))
+print(_place_trades(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode), False)))
 
 # Can compare portfolio if current orders place, and current orders if orders dont place using the order_fill_assumption
 # argument. This allows easier evaluation of trading costs every day when a proposal for new trades in placed
