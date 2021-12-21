@@ -5,15 +5,15 @@ from app.repository.alpaca.models.Instructions import Instruction
 alpaca = AlpacaService()
 
 
-class Trader():
+class Trader:
     positions: Positions
     orders: Orders
 
     def set_positions(self, pos: Positions):
-        Trader.positions = pos
+        self.positions = pos
 
-    def set_orders(self, ord: Orders):
-        Trader.orders = ord
+    def set_orders(self, orders: Orders):
+        self.orders = orders
 
     def get_positions(self):
         positions_obs = alpaca.get_positions()
@@ -23,6 +23,7 @@ class Trader():
         orders_obs = alpaca.get_orders()
         orders_obs.subscribe(lambda response: self.set_orders(response))
 
+    # FIXME
     def buy_order(self, instruction: Instruction):
         # Weight checks in validator
         buy_obs = alpaca.submit_order(instruction)
