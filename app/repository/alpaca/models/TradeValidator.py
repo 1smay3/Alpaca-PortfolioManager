@@ -72,7 +72,7 @@ def approved_portfolio(proposed_portfolio: list[Instruction]):
     return approved_port
 
 
-def _current_portfolio():
+def _current_portfolio(order_fill_assumption: bool):
     # Get orders from API
     pm.get_positions()
     pm.get_orders()
@@ -89,18 +89,24 @@ def _current_portfolio():
     symbol_value_portfolio = [([x.symbol, x.market_value]) for x in current_portfolio]
     symbol_weight_portfolio = [(x.symbol, float(x.market_value) / float(account_balance)) for x in current_portfolio]
 
+    """ CLEANING TO REMOVE AMD FROM MANUAL TRADE FOR NOW """
+    cleaned_orders = []
+    for order in current_orders:
+        if order.symbol == "AMD":
+            pass
+        else:
+            cleaned_orders.append(order)
+
     # When the market is closed, there will be no market price for orders, so use the notional requested in the order
-    # symbol_value_orders = [([x.symbol, x.market_value]) for x in current_orders]
-    # symbol_weight_current_orders = [([x.symbol, float(x.market_value) / float(account_balance)]) for x in
-    #                                 current_orders]
-    #
-    # # Assuming orders get filled, current portfolio
-    # if order_fill_assumption:
-    #     post_order_portfolio = symbol_weight_portfolio + symbol_weight_current_orders
-    # else:
-    #     post_order_portfolio = symbol_weight_portfolio
-    #
-    post_order_portfolio = symbol_weight_portfolio
+    symbol_value_orders = [([x.symbol, x.notional]) for x in cleaned_orders]
+    symbol_weight_current_orders = [(x.symbol, (float(x.notional) / float(account_balance))) for x in
+                                    cleaned_orders]
+
+    # Assuming orders get filled, current portfolio
+    if order_fill_assumption:
+        post_order_portfolio = symbol_weight_portfolio + symbol_weight_current_orders
+    else:
+        post_order_portfolio = symbol_weight_portfolio
 
     return post_order_portfolio
 
@@ -122,8 +128,8 @@ def _approved_compiled_instructions(desired_portfolio: dict):
     return approved_instructions
 
 
-def _portfolio_difference(approved_instructions):
-    current_port = _current_portfolio()
+def _portfolio_difference(approved_instructions, order_fill_assumption: bool):
+    current_port = _current_portfolio(order_fill_assumption)
     approved_port = [(x.symbol, float(x.weight)) for x in approved_instructions]
 
     # Convert to df with two sets of columns, to use merge and then take diff between pre and post weight coluimn
@@ -139,15 +145,15 @@ def _portfolio_difference(approved_instructions):
     return combined_dfs
 
 
-def _trade_instructions(approved_instructions):
+def _trade_instructions(approved_instructions, order_fill_assumption: bool):
     account_handler.pull_account()
-    port_diff = _portfolio_difference(approved_instructions)
+    port_diff = _portfolio_difference(approved_instructions, order_fill_assumption)
     pa = account_handler.personalAccount
     account_balance = pa.balance
     rebalance_instructions = []
 
     """ CLEANING TO REMOVE AMD FROM MANUAL TRADE FOR NOW """
-    clean_port_diff = port_diff[port_diff['proposed trade'] >=0]
+    clean_port_diff = port_diff[port_diff['proposed trade'] >= 0]
 
     for symbol in clean_port_diff.index:
         relevant_data = port_diff.loc[symbol]
@@ -161,7 +167,16 @@ def _trade_instructions(approved_instructions):
 def _place_trades(approved_instructions):
     for ins in approved_instructions:
         print(ins.weight)
-        pm.buy_order(ins)
+        user_check = input("User Approval: Y/N")
+        if user_check == "Y":
+            pm.buy_order(ins)
+        elif user_check == "N":
+            print("User Rejected")
 
 
-print(_place_trades(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode))))
+# print(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode)))
+
+print(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode), False))
+
+# Can compare portfolio if current orders place, and current orders if orders dont place using the order_fill_assumption
+# argument. This allows easier evaluation of trading costs every day when a proposal for new trades in placed
