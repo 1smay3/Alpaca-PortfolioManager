@@ -14,14 +14,15 @@ class AccountHandler:
         account_observable.subscribe(lambda remoteAccount: AccountHandler.create_account(self, remoteAccount))
 
     def create_account(self, remoteAccount):
-        self.personalAccount = localAccount(remoteAccount)
+
+        self.personalAccount = LocalAccount(remoteAccount)
 
 
 # TODO
 # Remove later
 
 @dataclass
-class localAccount:
+class LocalAccount:
     is_online: bool = False
     status = str
     balance = str
