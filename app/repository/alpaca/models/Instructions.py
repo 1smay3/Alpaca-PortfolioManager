@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from app.util.strictdataclasses import StrictDataClass
 
 
-@dataclass
+@StrictDataClass
 class Instruction:
     symbol: str
     side: str  # Enum
