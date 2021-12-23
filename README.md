@@ -12,7 +12,7 @@ plotting, and reporting.
 * Systematise positioning in the above optimal portfolio, taking into account current positioning and trading fees. 
 * Generate accessible reporting, including performance and risk.
 * Use the framework built for a more diverse trading system, where optimal portfolios or signals can be introduced as part
-of an entire 'portfolio system'
+of an entire 'portfolio system'.
 
 ## Libraries
 * [Optimised Factor Portfolio](https://github.com/1smay3/meanvar_factor_etf)
