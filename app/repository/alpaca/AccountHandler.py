@@ -1,27 +1,20 @@
 from alpaca_trade_api.entity import Account
-from app.repository.alpaca.alpaca_service import AlpacaService
-
-from dataclasses import dataclass
-
-alpaca = AlpacaService()
+from app.repository.alpaca.alpaca_service import get_account
+from app.util.strictdataclasses import StrictDataClass
 
 
 class AccountHandler:
     personalAccount = None
 
     def pull_account(self):
-        account_observable = alpaca.get_account()
+        account_observable = get_account()
         account_observable.subscribe(lambda remoteAccount: AccountHandler.create_account(self, remoteAccount))
 
     def create_account(self, remoteAccount):
-
         self.personalAccount = LocalAccount(remoteAccount)
 
 
-# TODO
-# Remove later
-
-@dataclass
+@StrictDataClass
 class LocalAccount:
     is_online: bool = False
     status = str

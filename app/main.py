@@ -1,42 +1,33 @@
-from app.repository.alpaca.models.OrderHandler import Trader
-from app.repository.alpaca.models.AccountHandler import AccountHandler
-from app.test import portfolio_hardcode
-import datetime
-from app.config.metadata import dt_format
 import logging
 
-# Get date and time
-current_dt = datetime.datetime.now().strftime(dt_format)
-
-# TODO: Extract this to a logging layer as this is not easily used between machines.
-logging.basicConfig(filename='../app/logs/main.log',
-                    filemode='a',
-                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
-                    datefmt=dt_format,
-                    level=logging.INFO)
+from app.config.constants import DEFAULT_DATE_TIME_FORMAT, DEFAULT_LOG_LOCATION
+from app.logging.logger import Logger
+from app.repository.alpaca.OrderHandler import PortfolioManager
+from app.repository.alpaca.AccountHandler import AccountHandler
+from app.test import portfolio_hardcode
 
 # Initiate Classes
-pm = Trader()
+portfolio_manager = PortfolioManager()
 account_handler = AccountHandler()
+logger = Logger(date_time_format=DEFAULT_DATE_TIME_FORMAT, log_location=DEFAULT_LOG_LOCATION, log_level=logging.INFO)
 
-# Get Account
+# Get / Refresh the current account
 account_handler.pull_account()
-pa = account_handler.personalAccount
 
 # Check Account Status
-if pa.is_online:
-    logging.info("Account Online : " + current_dt)
+if account_handler.personalAccount.is_online:
+    logger.log_info("Account Online")
     pass
 else:
-    logging.info("Failed to retrieve account information : " + current_dt)
+    logger.log_info("Failed to retrieve account information")
     raise ValueError("Account is not online")
 
 # Get current balance, positions, and orders to build portfolio
-pm.get_orders()
-pm.get_positions()
+portfolio_manager.get_orders()
+portfolio_manager.get_positions()
 
-orders = pm.orders
-positions = pm.positions
+orders = portfolio_manager.orders
+positions = portfolio_manager.positions
 
 # Import optimal portfolio, and check against existing positions
 op_port = portfolio_hardcode

@@ -1,7 +1,7 @@
 from app.repository.alpaca.models.Instructions import Instruction
-from app.repository.alpaca.models.OrderHandler import Trader
-from app.repository.alpaca.models.AccountHandler import AccountHandler
-from app.test import test_trade1, test_trade2, trades_test, portfolio_hardcode
+from app.repository.alpaca.OrderHandler import PortfolioManager
+from app.repository.alpaca.AccountHandler import AccountHandler
+from app.test import portfolio_hardcode
 
 import pandas as pd
 
@@ -11,7 +11,7 @@ WIP - DRAFT - implementation / logic / what we want to achieve inplace, but stru
 # TODO typehints, cleanup
 # Draw very clean lines between weight and notional
 
-pm = Trader()
+pm = PortfolioManager()
 account_handler = AccountHandler()
 
 
