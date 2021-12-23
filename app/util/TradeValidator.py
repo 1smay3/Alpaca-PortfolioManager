@@ -13,6 +13,7 @@ WIP - DRAFT - implementation / logic / what we want to achieve inplace, but stru
 # TODO typehints, cleanup
 # Draw very clean lines between weight and notional
 
+
 def maximum_checker(value: float) -> bool:
     return value <= 1
 
@@ -21,18 +22,30 @@ def minimum_checker(value: float) -> bool:
     return value > 0
 
 
-def handle_single_inval_weights(is_valid_min: bool, is_valid_max: bool, symbol: str, weight: float):
+def handle_single_inval_weights(
+    is_valid_min: bool, is_valid_max: bool, symbol: str, weight: float
+):
     if not is_valid_min:
-        raise ValueError(symbol + " weight must be positive, is currently: " + str("{:.2%}".format(weight)))
+        raise ValueError(
+            symbol
+            + " weight must be positive, is currently: "
+            + str("{:.2%}".format(weight))
+        )
     if not is_valid_max:
-        raise ValueError(symbol + " weight must be less than 1, is currently: " + str("{:.2%}".format(weight)))
+        raise ValueError(
+            symbol
+            + " weight must be less than 1, is currently: "
+            + str("{:.2%}".format(weight))
+        )
 
 
 def handle_port_inval_weights(weight: float):
     pretty_weight = str("{:.2%}".format(weight))
     if weight != 1:
         raise ValueError(
-            "Sum of Portfolio weights must be equal to 1, is currently: " + pretty_weight)
+            "Sum of Portfolio weights must be equal to 1, is currently: "
+            + pretty_weight
+        )
     return True
 
 
@@ -83,7 +96,9 @@ def _current_portfolio(positions: Positions, personal_account: LocalAccount):
     # TODO move this somewhere else, here just retrieve portfolio internally
     # FIXME: Clean to get relevant data, particularly for manual review stage
     # FIXME: symbol_value_portfolio = [([x.symbol, x.market_value]) for x in positions]
-    symbol_weight_portfolio = [(p.symbol, float(p.market_value) / float(account_balance)) for p in positions]
+    symbol_weight_portfolio = [
+        (p.symbol, float(p.market_value) / float(account_balance)) for p in positions
+    ]
 
     # When the market is closed, there will be no market price for orders, so use the notional requested in the order
     # symbol_value_orders = [([x.symbol, x.market_value]) for x in current_orders]
@@ -106,7 +121,12 @@ def _approved_compiled_instructions(desired_portfolio: dict):
     # For each item in portfolio, form a list of instructions which would constitute the desired portfolio:
     pre_approval_instructions = []
     for symbol in desired_portfolio:
-        ins = Instruction(symbol=symbol, weight=desired_portfolio[symbol] / 100, side="buy", type="market")
+        ins = Instruction(
+            symbol=symbol,
+            weight=desired_portfolio[symbol] / 100,
+            side="buy",
+            type="market",
+        )
         # Check instruction individually
         if _is_buy_valid(ins):
             pre_approval_instructions.append(ins)
@@ -118,38 +138,49 @@ def _approved_compiled_instructions(desired_portfolio: dict):
     return approved_instructions
 
 
-def _portfolio_difference(positions: Positions, personal_account: LocalAccount, approved_instructions):
+def _portfolio_difference(
+    positions: Positions, personal_account: LocalAccount, approved_instructions
+):
     current_port = _current_portfolio(positions, personal_account)
     approved_port = [(x.symbol, float(x.weight)) for x in approved_instructions]
 
     # Convert to df with two sets of columns, to use merge and then take diff between pre and post weight coluimn
-    df_curr_port = pd.DataFrame(current_port, columns=['symbol', 'current weight'])
+    df_curr_port = pd.DataFrame(current_port, columns=["symbol", "current weight"])
     df_curr_port.set_index("symbol", inplace=True)
-    df_app_port = pd.DataFrame(approved_port, columns=['symbol', 'proposed weight'])
+    df_app_port = pd.DataFrame(approved_port, columns=["symbol", "proposed weight"])
     df_app_port.set_index("symbol", inplace=True)
 
     # Combined dfs for comparison
     combined_dfs = pd.concat([df_curr_port, df_app_port], axis=1).fillna(0)
     # Derive trades
-    combined_dfs['proposed trade'] = combined_dfs['proposed weight'] - combined_dfs['current weight']
+    combined_dfs["proposed trade"] = (
+        combined_dfs["proposed weight"] - combined_dfs["current weight"]
+    )
     return combined_dfs
 
 
-def _trade_instructions(positions: Positions, personal_account: LocalAccount, approved_instructions):
-    port_diff = _portfolio_difference(positions, personal_account, approved_instructions)
+def _trade_instructions(
+    positions: Positions, personal_account: LocalAccount, approved_instructions
+):
+    port_diff = _portfolio_difference(
+        positions, personal_account, approved_instructions
+    )
     rebalance_instructions = []
 
     # FIXME: Nuke this
     """ CLEANING TO REMOVE AMD FROM MANUAL TRADE FOR NOW """
-    clean_port_diff = port_diff[port_diff['proposed trade'] >= 0]
+    clean_port_diff = port_diff[port_diff["proposed trade"] >= 0]
 
     for symbol in clean_port_diff.index:
         # TODO: Add doc here
         relevant_data = port_diff.loc[symbol]
-        proposed_trade = relevant_data['proposed trade']
+        proposed_trade = relevant_data["proposed trade"]
         notional = float(proposed_trade) * float(personal_account.balance)
-        rebal_ins = Instruction(symbol=symbol, weight=notional, side="buy", type="market")
+        rebal_ins = Instruction(
+            symbol=symbol, weight=notional, side="buy", type="market"
+        )
         rebalance_instructions.append(rebal_ins)
     return rebalance_instructions
+
 
 # print(_place_trades(_trade_instructions(_approved_compiled_instructions(portfolio_hardcode))))

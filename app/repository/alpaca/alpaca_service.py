@@ -11,7 +11,7 @@ api = tradeapi.REST(
     base_url=URL("https://paper-api.alpaca.markets"),
     key_id=paper_key_id,
     secret_key=paper_key_secret,
-    api_version='v2'
+    api_version="v2",
 )
 
 
@@ -24,7 +24,7 @@ def get_clock() -> Observable:
 
 
 def get_active_assets() -> Observable:
-    return rx.of(api.list_assets(status='active'))
+    return rx.of(api.list_assets(status="active"))
 
 
 def get_orders() -> Observable:
@@ -36,7 +36,11 @@ def get_positions() -> Observable:
 
 
 def submit_order(instruction: Instruction) -> Observable:
-    return rx.of(api.submit_order(instruction.symbol,
-                                  side=instruction.side,
-                                  notional=instruction.weight,
-                                  type=instruction.type))
+    return rx.of(
+        api.submit_order(
+            instruction.symbol,
+            side=instruction.side,
+            notional=instruction.weight,
+            type=instruction.type,
+        )
+    )

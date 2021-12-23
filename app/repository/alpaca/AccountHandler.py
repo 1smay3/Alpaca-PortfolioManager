@@ -8,7 +8,9 @@ class AccountHandler:
 
     def pull_account(self):
         account_observable = get_account()
-        account_observable.subscribe(lambda remoteAccount: AccountHandler.create_account(self, remoteAccount))
+        account_observable.subscribe(
+            lambda remoteAccount: AccountHandler.create_account(self, remoteAccount)
+        )
 
     def create_account(self, remoteAccount):
         self.personalAccount = LocalAccount(remoteAccount)
@@ -23,6 +25,6 @@ class LocalAccount:
 
     def __init__(self, remoteAccount: Account) -> None:
         # Brackets not needed - for 'logic'
-        self.is_online = (remoteAccount.status == "ACTIVE")
+        self.is_online = remoteAccount.status == "ACTIVE"
         self.balance = remoteAccount.equity
         self.cash = remoteAccount.cash

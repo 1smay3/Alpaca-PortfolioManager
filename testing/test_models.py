@@ -7,5 +7,3 @@ class ExampleBasicStrictDataClass:
     exampleInt: int = 0
     exampleFloat: float = 0.0
     exampleBoolean: bool = False
-
-

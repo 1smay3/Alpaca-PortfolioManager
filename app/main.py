@@ -9,7 +9,11 @@ from app.test import portfolio_hardcode
 # Initiate Classes
 portfolio_manager = PortfolioManager()
 account_handler = AccountHandler()
-logger = Logger(date_time_format=DEFAULT_DATE_TIME_FORMAT, log_location=DEFAULT_LOG_LOCATION, log_level=logging.INFO)
+logger = Logger(
+    date_time_format=DEFAULT_DATE_TIME_FORMAT,
+    log_location=DEFAULT_LOG_LOCATION,
+    log_level=logging.INFO,
+)
 
 # Get / Refresh the current account
 account_handler.pull_account()
