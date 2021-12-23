@@ -1,16 +1,9 @@
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/1smay3/Alpaca-PortfolioManager/blob/trade-validation-logic/WIP-Logo.png">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
   <h3 align="center">Systematically Optimised Factor Portfolio</h3>
 
   <p align="center">
     Systematically trading a portfolio optimised using classical Modern Portfolio Theory ("MPT") optimisation techniques, with intelligent position placement and monitoring.
   </p>
-</div>
+
 
 <!-- ABOUT THE PROJECT -->
 ## Project Goals
