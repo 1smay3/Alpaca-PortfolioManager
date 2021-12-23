@@ -19,3 +19,6 @@ class Logger:
 
     def _current_dt(self) -> str:
         return datetime.datetime.now().strftime(self.date_time_format)
+
+    def log_trade(self, instruction):
+        self.log_info(instruction.symbol + " @ " + instruction.weight)
