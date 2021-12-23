@@ -1,5 +1,4 @@
 from alpaca_trade_api.rest import Positions, Orders
-
 from app.repository.alpaca.models.Instructions import Instruction
 from app.repository.alpaca.AccountHandler import LocalAccount
 from app.test import portfolio_hardcode
