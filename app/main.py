@@ -1,8 +1,12 @@
 from app.repository.alpaca.models.OrderHandler import Trader
 from app.repository.alpaca.models.AccountHandler import AccountHandler
 from app.test import portfolio_hardcode
-from app.config.metadata import dt_format, current_dt
+import datetime
+from app.config.metadata import dt_format
 import logging
+
+# Get date and time
+current_dt = datetime.datetime.now().strftime(dt_format)
 
 # TODO: Extract this to a logging layer as this is not easily used between machines.
 logging.basicConfig(filename='../app/logs/main.log',
