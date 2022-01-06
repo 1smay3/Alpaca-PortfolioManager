@@ -10,11 +10,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Project Goals
-* Automatically apply MPT optimisation techniques to a range of investible factor ETFs, prescribing the 'optimal' portfolio, 
-plotting, and reporting.
-* Systematise positioning in the above optimal portfolio, taking into account current positioning and trading fees. 
+* Automatically apply MPT optimisation techniques to a range of investible factor ETFs, trading the 'optimal' portfolio
 * Generate accessible reporting, including performance and risk.
-* Use the framework built for a more diverse trading system, where optimal portfolios or signals can be introduced as part
+* Systematise portfolio positioning, intelligently accounting for current positioning and trading fees. 
+* Build the framework in a reusable and extensible way, to later be part of a more diverse trading system, where optimal portfolios or signals can be introduced as part
 of an entire 'portfolio system'.
 
 ## Libraries
