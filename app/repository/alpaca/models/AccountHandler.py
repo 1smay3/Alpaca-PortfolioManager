@@ -21,5 +21,4 @@ class AccountHandler:
         self.personalAccount = LocalAccount(remoteAccount=remoteAccount)
 
     def _create_portfolio_history(self, remoteHistory):
-        print(remoteHistory)
         self.portfolioHistory = LocalPortfolioHistory(remoteHistory=remoteHistory)

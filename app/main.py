@@ -26,7 +26,6 @@ ph = account_handler.portfolioHistory
 
 # Check Account Status
 if pa.is_online:
-    print("Account Online")
     logging.info("Account Online : " + current_dt)
     pass
 else:
