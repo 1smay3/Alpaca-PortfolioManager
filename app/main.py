@@ -1,17 +1,15 @@
 from app.repository.alpaca.models.OrderHandler import Trader
-from app.repository.alpaca.models.Instructions import Instruction
 from app.repository.alpaca.models.AccountHandler import AccountHandler
-from app.config.config import portfolio_hardcode
 import logging
 import datetime
 
 # TODO: Extract this to a logging layer as this is not easily used between machines.
 dt_format = '%d/%m/%Y %H:%M:%S'
-logging.basicConfig(filename='../app/logs/main.log',
-                    filemode='a',
-                    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
-                    datefmt=dt_format,
-                    level=logging.INFO)
+# logging.basicConfig(filename='../app/logs/main.log',
+#                     filemode='a',
+#                     format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',
+#                     datefmt=dt_format,
+#                     level=logging.INFO)
 
 # Get date and time
 current_dt = datetime.datetime.now().strftime(dt_format)
@@ -21,11 +19,14 @@ pm = Trader()
 account_handler = AccountHandler()
 
 # Get Account
-account_handler.pull_account()
+account_handler.refresh_account()
+account_handler.refresh_portfolio_history()
 pa = account_handler.personalAccount
+ph = account_handler.portfolioHistory
 
 # Check Account Status
 if pa.is_online:
+    print("Account Online")
     logging.info("Account Online : " + current_dt)
     pass
 else:
@@ -37,8 +38,3 @@ pm.get_positions()
 
 orders = pm.orders
 positions = pm.positions
-
-# Import optimal portfolio, and check against existing positions
-op_port = portfolio_hardcode
-
-print("END")

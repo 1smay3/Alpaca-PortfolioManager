@@ -14,28 +14,36 @@ api = tradeapi.REST(
 )
 
 
-def get_account() -> Observable:
-    return rx.of(api.get_account())
+class AlpacaService:
 
+    def get_account(self) -> Observable:
+        return rx.of(api.get_account())
 
-def get_clock() -> Observable:
-    return rx.of(api.get_clock())
+    def get_portfolio_history(self) -> Observable:
+        """
+        parameters:
+        date_start: str = None,
+        date_end: str = None,
+        period: str = None,
+        timeframe=None,
+        extended_hours: bool = None
+        """
+        return rx.of(api.get_portfolio_history())
 
+    def get_clock(self) -> Observable:
+        return rx.of(api.get_clock())
 
-def get_active_assets() -> Observable:
-    return rx.of(api.list_assets(status='active'))
+    def get_active_assets(self) -> Observable:
+        return rx.of(api.list_assets(status='active'))
 
+    def get_orders(self) -> Observable:
+        return rx.of(api.list_orders())
 
-def get_orders() -> Observable:
-    return rx.of(api.list_orders())
+    def get_positions(self) -> Observable:
+        return rx.of(api.list_positions())
 
-
-def get_positions() -> Observable:
-    return rx.of(api.list_positions())
-
-
-def submit_order(instruction: Instruction) -> Observable:
-    return rx.of(api.submit_order(instruction.symbol,
-                                  side=instruction.side,
-                                  notional=instruction.weight,
-                                  type=instruction.type))
+    def submit_order(self, instruction: Instruction) -> Observable:
+        return rx.of(api.submit_order(instruction.symbol,
+                                      side=instruction.side,
+                                      notional=instruction.weight,
+                                      type=instruction.type))
