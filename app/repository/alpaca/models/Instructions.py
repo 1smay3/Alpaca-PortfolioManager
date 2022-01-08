@@ -1,7 +1,7 @@
-from app.util.strictdataclasses import StrictDataClass
+from app.util.strictdataclasses import TypeCheckedClass
 
 
-@StrictDataClass
+@TypeCheckedClass
 class Instruction:
     symbol: str
     side: str  # Enum
