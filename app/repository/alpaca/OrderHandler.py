@@ -28,7 +28,6 @@ class PortfolioManager:
         orders_obs.subscribe(lambda response: self.set_orders(response))
 
     def _buy_order(self, instruction: Instruction):
-        # TODO : Weight checks in validator
         buy_obs = submit_order(instruction)
         buy_obs.subscribe(lambda response: self.logger.log_trade(response))
 
