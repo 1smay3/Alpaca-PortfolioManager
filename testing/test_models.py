@@ -1,8 +1,8 @@
-from app.util.strictdataclasses import StrictDataClass
+from app.util.strictdataclasses import TypeCheckedClass
 
 
-@StrictDataClass
-class ExampleBasicStrictDataClass:
+@TypeCheckedClass
+class ExampleBasicTypeCheckedClass:
     exampleString: str = ""
     exampleInt: int = 0
     exampleFloat: float = 0.0

@@ -18,7 +18,7 @@ def check_keyword_args(cls, kwargs):
                     )
 
 
-class StrictDataClass(object):
+class TypeCheckedClass(object):
     original_class: None
 
     # Called when the "SDC"-annotated class is imported
@@ -27,7 +27,6 @@ class StrictDataClass(object):
 
     # Called when the "SDC"-annotated class is instantiated, with any arguments
     def __call__(self, *args, **kwargs):
-        # Checks all keyword args for their expected types
+        # Checks all keyword args for their expected types, returning this if all types are expected
         check_keyword_args(self.original_class, kwargs)
-        # Returns a dataclass-wrapped version of the original class if type checks are satisfied
-        return dataclasses.dataclass(self.original_class)
+        return self.original_class(**kwargs)

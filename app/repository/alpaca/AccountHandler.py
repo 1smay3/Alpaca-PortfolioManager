@@ -1,30 +1,24 @@
-from alpaca_trade_api.entity import Account
-from app.repository.alpaca.alpaca_service import get_account
-from app.util.strictdataclasses import StrictDataClass
+from app.repository.alpaca.alpaca_service import AlpacaService
+from app.repository.alpaca.models.Account import LocalAccount
+from app.repository.alpaca.models.PortfolioHistory import LocalPortfolioHistory
+
+alpaca = AlpacaService()
 
 
 class AccountHandler:
     personalAccount = None
+    portfolioHistory = None
 
-    def pull_account(self):
-        account_observable = get_account()
-        account_observable.subscribe(
-            lambda remoteAccount: AccountHandler.create_account(self, remoteAccount)
-        )
+    def refresh_account(self):
+        account_observable = alpaca.get_account()
+        account_observable.subscribe(lambda remoteAccount: self._create_account(remoteAccount))
 
-    def create_account(self, remoteAccount):
-        self.personalAccount = LocalAccount(remoteAccount)
+    def refresh_portfolio_history(self):
+        account_observable = alpaca.get_portfolio_history()
+        account_observable.subscribe(lambda remoteHistory: self._create_portfolio_history(remoteHistory))
 
+    def _create_account(self, remoteAccount):
+        self.personalAccount = LocalAccount(remoteAccount=remoteAccount)
 
-@StrictDataClass
-class LocalAccount:
-    is_online: bool = False
-    status = str
-    balance = str
-    cash = str
-
-    def __init__(self, remoteAccount: Account) -> None:
-        # Brackets not needed - for 'logic'
-        self.is_online = remoteAccount.status == "ACTIVE"
-        self.balance = remoteAccount.equity
-        self.cash = remoteAccount.cash
+    def _create_portfolio_history(self, remoteHistory):
+        self.portfolioHistory = LocalPortfolioHistory(remoteHistory=remoteHistory)
