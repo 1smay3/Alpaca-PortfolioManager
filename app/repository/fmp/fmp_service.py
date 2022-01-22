@@ -8,12 +8,6 @@ from abc import abstractmethod
 fmp = FMP(api_key=fmp_key)
 
 
-class IFMPService(Protocol):
-    @abstractmethod
-    def get_quote(self, ticker) -> Observable:
-        pass
-
-
-class FMPService(IFMPService):
+class FMPService:
     def get_quote(self, ticker) -> Observable:
         return rx.of(fmp.get_quote(ticker))

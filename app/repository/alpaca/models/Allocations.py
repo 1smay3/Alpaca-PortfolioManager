@@ -8,7 +8,7 @@ https://www.onlinetutorialspoint.com/python/how-to-create-python-iterable-class.
 
 
 # TODO: Convert to strict dataclass as per merged implementation
-@dataclass()
+@dataclass
 class Allocation:
     symbol: str
     weight: float
@@ -21,6 +21,7 @@ class Portfolio:
         self.portfolio_allocations = portfolio_allocations
         self.portfolio_approval_status = portfolio_approval_status
 
+    # TODO: Is this needed, can we not just iterate over with an array here
     def __iter__(self):
         return self
 
