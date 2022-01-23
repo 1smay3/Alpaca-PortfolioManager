@@ -1,5 +1,4 @@
 import unittest
-
 from app.repository.alpaca.models.Instructions import Instruction
 from testing.test_models import ExampleBasicTypeCheckedClass
 

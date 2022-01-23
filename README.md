@@ -10,14 +10,16 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Project Goals
-* Automatically apply MPT optimisation techniques to a range of investible factor ETFs, trading the 'optimal' portfolio
+* Automatically apply MPT optimisation techniques to a range of investible factor ETFs, prescribing the 'optimal' portfolio, 
+plotting, and reporting.
+* Systematise positioning in the above optimal portfolio, taking into account current positioning and trading fees. 
 * Generate accessible reporting, including performance and risk.
-* Systematise portfolio positioning, intelligently accounting for current positioning and trading fees. 
-* Build the framework in a reusable and extensible way, to later be part of a more diverse trading system, where optimal portfolios or signals can be introduced as part
+* Use the framework built for a more diverse trading system, where optimal portfolios or signals can be introduced as part
 of an entire 'portfolio system'.
 
 ## Libraries
 * [Optimised Factor Portfolio](https://github.com/1smay3/meanvar_factor_etf)
 * [Alapca Brokerage API](https://alpaca.markets/docs/api-documentation/)
+
 
 

@@ -12,7 +12,10 @@ def check_keyword_args(cls, kwargs):
                 # Check that incoming type matches expected
                 if not isinstance(keyword_arg, field_type):
                     # Throw a fatal exception if we try to force a type that is defined otherwise
-                    raise TypeError(f'Expected {field_name} to be {field_type}, 'f'but got {repr(type(keyword_arg))}')
+                    raise TypeError(
+                        f"Expected {field_name} to be {field_type}, "
+                        f"but got {repr(type(keyword_arg))}"
+                    )
 
 
 class TypeCheckedClass(object):
