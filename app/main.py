@@ -3,7 +3,7 @@ import logging
 from app.config.constants import DEFAULT_DATE_TIME_FORMAT
 from app.logging.logger import Logger
 from app.repository.alpaca.AccountHandler import AccountHandler
-from app.repository.alpaca.OrderHandler import PortfolioManager
+from app.repository.alpaca.PortfolioManager import PortfolioManager
 
 # Initiate Classes
 account_handler = AccountHandler()

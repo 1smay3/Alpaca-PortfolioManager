@@ -1,5 +1,5 @@
 from app.logging.logger import Logger
-from app.repository.alpaca.alpaca_service import AlpacaService
+from app.repository.alpaca.AlpacaService import AlpacaService
 from alpaca_trade_api.rest import Positions, Orders
 from app.repository.alpaca.models.Instructions import Instruction
 
