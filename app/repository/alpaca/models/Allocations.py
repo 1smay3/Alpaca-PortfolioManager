@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 
 """
-https://stackoverflow.com/questions/54140585/how-can-i-use-a-listcustomclass-as-type-with-dataclass-in-python-3-7-x
-https://www.onlinetutorialspoint.com/python/how-to-create-python-iterable-class.html#:~
-:text=An%20iterator%20is%20an%20object,be%20iterate%20over%20the%20values.
+Allocations is local version (desired portfolio) of remote positions object
 """
 
 

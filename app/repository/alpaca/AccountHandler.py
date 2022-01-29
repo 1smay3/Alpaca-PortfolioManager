@@ -4,10 +4,14 @@ from app.repository.alpaca.models.PortfolioHistory import LocalPortfolioHistory
 
 alpaca = AlpacaService()
 
+"""
+Makes network calls and passes to account
+"""
 
 class AccountHandler:
     personalAccount = None
     portfolioHistory = None
+
 
     def refresh_account(self):
         account_observable = alpaca.get_account()

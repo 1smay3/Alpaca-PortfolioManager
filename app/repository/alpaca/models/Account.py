@@ -1,5 +1,4 @@
 from alpaca_trade_api.entity import Account
-
 from app.util.strictdataclasses import TypeCheckedClass
 
 

@@ -22,7 +22,9 @@ def get_approved_portfolio(desired_portfolio: Portfolio) -> Portfolio:
         allocation.approval_status = _is_allocation_valid(allocation)
 
     # Set the overall "is portfolio valid" flag if applicable before returning
-    desired_portfolio_copy.portfolio_approval_status = is_portfolio_valid(desired_portfolio_copy)
+    desired_portfolio_copy.portfolio_approval_status = is_portfolio_valid(
+        desired_portfolio_copy
+    )
 
     return desired_portfolio_copy
 
@@ -103,5 +105,7 @@ def _get_total_portfolio_weight(desired_portfolio: Portfolio) -> float:
     :param desired_portfolio: list of desired allocations
     :return: sum of weights
     """
-    weights_list = list(map(lambda alloc: alloc.weight, desired_portfolio.portfolio_allocations))
+    weights_list = list(
+        map(lambda alloc: alloc.weight, desired_portfolio.portfolio_allocations)
+    )
     return sum(weights_list)
