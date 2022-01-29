@@ -1,6 +1,5 @@
 from app.util.strictdataclasses import TypeCheckedClass
 
-
 @TypeCheckedClass
 class ExampleBasicTypeCheckedClass:
     exampleString: str = ""
@@ -17,3 +16,5 @@ portfolio_hardcode = {
     "IWD": 0.0423,
     "IJR": 0.0291,
 }
+
+

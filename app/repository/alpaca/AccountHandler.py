@@ -1,13 +1,19 @@
-from app.repository.alpaca.alpaca_service import AlpacaService
+from app.repository.alpaca.AlpacaService import AlpacaService
 from app.repository.alpaca.models.Account import LocalAccount
 from app.repository.alpaca.models.PortfolioHistory import LocalPortfolioHistory
+from app.repository.alpaca.models.Positions import RemotePositions
 
 alpaca = AlpacaService()
+
+"""
+Makes network calls and passes to account -  static/metadata. Live trade data is handled in PortfolioManager
+"""
 
 
 class AccountHandler:
     personalAccount = None
     portfolioHistory = None
+    portfolioPositions = None
 
     def refresh_account(self):
         account_observable = alpaca.get_account()
