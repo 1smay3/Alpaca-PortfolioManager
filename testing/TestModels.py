@@ -1,5 +1,4 @@
 from app.util.strictdataclasses import TypeCheckedClass
-from app.repository.alpaca.AccountHandler import RemotePositions
 
 @TypeCheckedClass
 class ExampleBasicTypeCheckedClass:
