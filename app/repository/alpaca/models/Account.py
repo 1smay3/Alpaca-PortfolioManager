@@ -17,9 +17,3 @@ class LocalAccount:
 
     def __str__(self) -> str:
         return "Online: " + str(self.is_online) + " Balance: " + self.balance + " Cash: " + self.cash
-
-
-
-
-
-
