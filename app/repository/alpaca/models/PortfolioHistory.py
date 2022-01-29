@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import List
 
 from alpaca_trade_api.entity import PortfolioHistory
-
 from app.util.strictdataclasses import TypeCheckedClass
 
 
