@@ -21,5 +21,7 @@ of an entire 'portfolio system'.
 * [Optimised Factor Portfolio](https://github.com/1smay3/meanvar_factor_etf)
 * [Alapca Brokerage API](https://alpaca.markets/docs/api-documentation/)
 
+## Jira Board
+* [Jira Board](https://spenshares.atlassian.net/jira/software/projects/AUTOPM/boards/1)
 
 

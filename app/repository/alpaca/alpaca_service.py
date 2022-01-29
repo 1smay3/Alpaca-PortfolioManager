@@ -12,6 +12,9 @@ api = tradeapi.REST(
     secret_key=paper_secret,
     api_version='v2'
 )
+"""
+Try not to use this directly. Only use it as a dependency in other services.
+"""
 
 
 class AlpacaService:
