@@ -1,11 +1,4 @@
  <h1 align="center">WORK IN PROGRESS</h3>
- 
- 
- <h3 align="center">Systematically Optimised Factor Portfolio</h3>
-
-  <p align="center">
-    Systematically trading a portfolio optimised using classical Modern Portfolio Theory ("MPT") optimisation techniques, with intelligent position placement and monitoring.
-  </p>
 
 
 <!-- ABOUT THE PROJECT -->
